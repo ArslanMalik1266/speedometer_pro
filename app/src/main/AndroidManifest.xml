@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeedometerPro">
         <activity
-            android:name=".splashScreen.SplashScreen"
+            android:name=".presentation.splash.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true"/>
 
     </application>
