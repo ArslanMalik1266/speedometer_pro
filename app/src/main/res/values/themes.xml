@@ -10,7 +10,7 @@
     <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
     <item name="android:textSize">24sp</item>
     <item name="android:textColor">@color/white</item>
-    <item name="android:fontFamily">@font/sf_pro_semibold</item>
+    <item name="android:fontFamily">@font/overusedgrotesk_semibold</item>
     </style>
 
 

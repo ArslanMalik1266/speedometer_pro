@@ -7,6 +7,7 @@
     <color name="light_grey">#808080</color>
     <color name="dark_grey">#1A1A1A</color>
     <color name="medium_grey">#1C1C1C</color>
+    <color name="red">#E41717</color>
 
     <color name="orange">#FF8133</color>
 </resources>
