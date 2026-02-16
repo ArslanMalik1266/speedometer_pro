@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.legacy.kapt)
 }
 
 android {
@@ -50,6 +51,14 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("com.google.android.gms:play-services-location:21.3.0")
 // Kotlin Coroutines + Flow
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+    kapt("androidx.room:room-compiler:2.8.4")
+    implementation ("androidx.room:room-runtime:2.8.4")
+    implementation ("androidx.room:room-ktx:2.8.4")
+
+    implementation("androidx.datastore:datastore-preferences:1.2.0")
+// Coroutines (if not already included)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
 }
