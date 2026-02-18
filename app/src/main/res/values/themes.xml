@@ -5,7 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.SpeedometerPro" parent="Base.Theme.SpeedometerPro" />
+    <style name="Theme.SpeedometerPro" parent="Base.Theme.SpeedometerPro" >
+
+    </style>
 
     <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
     <item name="android:textSize">24sp</item>
