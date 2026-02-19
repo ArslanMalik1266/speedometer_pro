@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:background="@color/black">
 
+
         <!-- AppBar -->
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -44,20 +45,24 @@
 
                     <ImageView
                         android:id="@+id/historyIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_marginEnd="4dp"
                         android:src="@drawable/history_icon"
+                        android:padding="8dp"
+                        android:background="@drawable/circle_grey"
                         app:layout_constraintEnd_toStartOf="@id/settingsIcon"
                         app:layout_constraintTop_toTopOf="@id/settingsIcon"
                         app:layout_constraintBottom_toBottomOf="@id/settingsIcon" />
 
                     <ImageView
                         android:id="@+id/settingsIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:src="@drawable/settings_icon"
                         android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:background="@drawable/circle_grey"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent" />
@@ -79,7 +84,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:defaultNavHost="true"
-                app:navGraph="@navigation/nav_graph"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +91,10 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 
     <FrameLayout
         android:id="@+id/drawer"
@@ -95,7 +102,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:background="@color/medium_grey"
-        android:fitsSystemWindows="true"
         app:layout_constraintWidth_percent="0.8"/>
 
 
