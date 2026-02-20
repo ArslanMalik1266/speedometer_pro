@@ -18,8 +18,10 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import com.example.speedometerpro.R
+import com.example.speedometerpro.domain.usecase.CheckLocationPermissionUseCase
 import com.example.speedometerpro.presentation.history.HistoryFragment
 import com.example.speedometerpro.presentation.home.HomeFragment
+import com.example.speedometerpro.presentation.location.LocationBottomSheet
 import com.example.speedometerpro.presentation.settings.SettingsFragment
 import com.example.speedometerpro.util.DrawerDestination
 import com.google.android.material.appbar.MaterialToolbar
@@ -45,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         enableFullscreen()
         applyEdgePadding()
+
+        checkAndShowLocationSheet()
 
         toolbar = findViewById(R.id.toolbar)
         toolbarImage = findViewById(R.id.toolbarImage)
@@ -155,6 +159,16 @@ class MainActivity : AppCompatActivity() {
             )
 
             insets
+        }
+    }
+
+    private fun checkAndShowLocationSheet() {
+        val checkPermission = CheckLocationPermissionUseCase(applicationContext)
+
+        if (!checkPermission()) {
+            val locationSheet = LocationBottomSheet()
+            locationSheet.isCancelable = false
+            locationSheet.show(supportFragmentManager, "LocationBottomSheet")
         }
     }
 

@@ -20,9 +20,11 @@ class LocationPermissionViewModel(
 
     fun handlePermissionResult(isGranted: Boolean, shouldShowRationale: Boolean) {
         viewModelScope.launch {
-            if (!isGranted) {
+            val alreadyGranted = checkLocationPermissionUseCase()
+
+            if (!isGranted && !alreadyGranted) {
                 rejectionCount++
-                if (!shouldShowRationale && rejectionCount > 2) {
+                if (!shouldShowRationale && rejectionCount >= 1) {
                     _navigateToSettings.emit(Unit)
                 }
             }
