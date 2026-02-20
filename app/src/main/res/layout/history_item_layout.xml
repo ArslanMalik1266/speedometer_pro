@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="8dp"
+    app:strokeWidth="0dp"
+    android:layout_marginHorizontal="4dp"
+    android:backgroundTint="@color/dark_grey"
+
+
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="16dp"
+
+        >
+
+        <TextView
+            android:id="@+id/distance_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:textSize="14sp"
+            android:textColor="@color/almost_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/distance_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overusedgrotesk_semibold"
+            android:text="29 km"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/time_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/distance_tv" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:textSize="14sp"
+            android:textColor="@color/almost_white"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/distance_tv"
+            app:layout_constraintTop_toBottomOf="@id/distance_tv" />
+
+        <TextView
+            android:id="@+id/time_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overusedgrotesk_semibold"
+            android:text="1 hr 20 m"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/time_tv"
+            app:layout_constraintEnd_toEndOf="@id/distance_value"
+            app:layout_constraintTop_toTopOf="@id/time_tv" />
+
+        <TextView
+            android:id="@+id/max_speed_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Max Speed"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_tv"
+            android:textColor="@color/almost_white"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/avg_speed_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Avg Speed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/max_speed_tv"
+            app:layout_constraintTop_toTopOf="@id/max_speed_tv"
+            app:layout_constraintBottom_toBottomOf="@id/max_speed_tv"
+            android:textColor="@color/almost_white"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/distance_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance"
+            app:layout_constraintStart_toEndOf="@id/max_speed_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/max_speed_tv"
+            app:layout_constraintBottom_toBottomOf="@id/max_speed_tv"
+            android:textColor="@color/almost_white"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/avg_speed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overusedgrotesk_semibold"
+            android:text="30"
+            android:textColor="@color/orange"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/avg_speed_tv"
+            app:layout_constraintStart_toStartOf="@+id/avg_speed_tv"
+            app:layout_constraintTop_toBottomOf="@+id/avg_speed_tv" />
+        <TextView
+            android:id="@+id/max_speed_value"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overusedgrotesk_semibold"
+            android:text="25"
+            android:textColor="@color/orange"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/max_speed_tv"
+            app:layout_constraintStart_toStartOf="@+id/max_speed_tv"
+            app:layout_constraintTop_toBottomOf="@+id/max_speed_tv" />
+        <TextView
+            android:id="@+id/distance_text_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overusedgrotesk_semibold"
+            android:text="60"
+            android:textColor="@color/orange"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/distance_text"
+            app:layout_constraintStart_toStartOf="@+id/distance_text"
+            app:layout_constraintTop_toBottomOf="@+id/distance_text" />
+        <TextView
+            android:id="@+id/avg_speed_value_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:text="km/h"
+            android:textColor="@color/light_grey"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/avg_speed_value"
+            app:layout_constraintStart_toStartOf="@+id/avg_speed_value"
+            app:layout_constraintTop_toBottomOf="@+id/avg_speed_value" />
+        <TextView
+            android:id="@+id/max_speed_value_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:text="km/h"
+            android:textColor="@color/light_grey"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/max_speed_value"
+            app:layout_constraintStart_toStartOf="@+id/max_speed_value"
+            app:layout_constraintTop_toBottomOf="@+id/max_speed_value" />
+        <TextView
+            android:id="@+id/distance_text_value_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:text="km/h"
+            android:textColor="@color/light_grey"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/distance_text_value"
+            app:layout_constraintStart_toStartOf="@+id/distance_text_value"
+            app:layout_constraintTop_toBottomOf="@+id/distance_text_value" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_grey"
+    tools:context=".presentation.settings.SettingsFragment">
+
+
+    <!-- AppBar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/medium_grey"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/settings_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/background_grey"
+            app:navigationIcon="@drawable/back_arrow"
+            app:titleTextAppearance="@style/ToolbarTitle"
+            android:titleTextColor="@color/almost_white"
+            app:titleCentered="false"
+            app:title="Settings"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.history.HistoryFragment"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96" />
+
+        <!-- Top 2% -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.02" />
+
+        <!-- Bottom 2% -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.98" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/unit_selection_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/container_rounded_bg"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintTop_toTopOf="@id/guideTop">
+
+            <TextView
+                android:id="@+id/speed_unit_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Speed Unit"
+                android:textColor="@color/almost_white"
+                android:fontFamily="@font/overusedgrotesk_medium"
+                android:textSize="16sp"
+                android:paddingHorizontal="4dp"
+                android:paddingStart="4dp"
+                android:paddingVertical="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/speed_unit_value"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/speed_unit_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/spinner_icon"
+                android:drawablePadding="8dp"
+                android:text="km/h"
+                android:paddingHorizontal="4dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/almost_white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/speed_unit_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/speed_unit_tv" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/unit_radio_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:padding="16dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/speed_unit_tv">
+
+                <RadioGroup
+                    android:id="@+id/unit_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/unit_radio_kmh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="km/h"
+                        android:fontFamily="@font/overusedgrotesk_medium"
+                        android:textSize="16sp"
+                        app:buttonTint="@color/orange"
+                        android:textColor="@color/almost_white" />
+
+                    <RadioButton
+                        android:id="@+id/unit_radio_mph"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="mph"
+                        android:fontFamily="@font/overusedgrotesk_medium"
+                        android:textSize="16sp"
+                        app:buttonTint="@color/orange"
+                        android:textColor="@color/almost_white"/>
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/speed_limit_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/container_rounded_bg"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintTop_toBottomOf="@id/unit_selection_container">
+
+            <TextView
+                android:id="@+id/speed_limit_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Speed Limit"
+                android:textColor="@color/almost_white"
+                android:fontFamily="@font/overusedgrotesk_medium"
+                android:textSize="16sp"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/speed_limit_value"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/speed_limit_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/spinner_icon"
+                android:drawablePadding="8dp"
+                android:text="0"
+                android:paddingHorizontal="4dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/almost_white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/speed_limit_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/speed_limit_tv" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/limit_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:padding="16dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/speed_limit_tv">
+
+                <ImageButton
+                    android:id="@+id/minus_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_minus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <SeekBar
+                    android:id="@+id/mySlider"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:max="240"
+                    android:maxHeight="6dp"
+                    android:padding="0dp"
+                    android:progressDrawable="@drawable/custom_slider_track"
+                    android:thumb="@drawable/custom_slider_thumb"
+                    android:splitTrack="false"
+                    android:progress="50"
+                    android:thumbOffset="0dp"
+                    app:layout_constraintStart_toEndOf="@id/minus_image"
+                    app:layout_constraintEnd_toStartOf="@id/plus_image"
+                    app:layout_constraintTop_toTopOf="@id/minus_image"
+                    app:layout_constraintBottom_toBottomOf="@id/minus_image" />
+
+                <ImageButton
+                    android:id="@+id/plus_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_plus"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Speed Alert -->
+        <TextView
+            android:id="@+id/speed_alert_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Speed Alert"
+            android:textColor="@color/almost_white"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:textSize="16sp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="4dp"
+            android:layout_marginVertical="16dp"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintEnd_toStartOf="@id/speed_alert_switch"
+            app:layout_constraintTop_toBottomOf="@id/speed_limit_container"
+            android:layout_marginBottom="24dp"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/speed_alert_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:checked="false"
+            android:padding="0dp"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:thumb="@drawable/thumb_selector"
+            app:layout_constraintBottom_toBottomOf="@+id/speed_alert_tv"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintTop_toTopOf="@id/speed_alert_tv"
+            app:thumbTextPadding="0dp"
+            app:thumbTint="@null"
+            app:track="@drawable/track_selector"
+            app:trackTint="@null" />
+
+        <!-- Auto Save -->
+        <TextView
+            android:id="@+id/auto_save_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Auto Save Trips"
+            android:textColor="@color/almost_white"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:textSize="16sp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="4dp"
+            android:layout_marginVertical="16dp"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintEnd_toStartOf="@id/auto_save_switch"
+            app:layout_constraintTop_toBottomOf="@id/speed_alert_tv"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/auto_save_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:checked="false"
+            android:padding="0dp"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:thumb="@drawable/thumb_selector"
+            app:thumbTextPadding="0dp"
+            app:thumbTint="@null"
+            app:track="@drawable/track_selector"
+            app:trackTint="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/auto_save_tv"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintTop_toTopOf="@id/auto_save_tv"/>
+
+
+        <TextView
+            android:id="@+id/gps_accuracy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:paddingVertical="12dp"
+            android:text="GPS Accuracy"
+            android:textColor="@color/almost_white"
+            android:textSize="16sp"
+            android:paddingHorizontal="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/auto_save_tv" />
+
+        <TextView
+            android:id="@+id/clear_trip_history_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:paddingVertical="12dp"
+            android:text="Clear Trip History"
+            android:textColor="@color/almost_white"
+            android:textSize="16sp"
+            android:paddingHorizontal="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/gps_accuracy" />
+
+        <TextView
+            android:id="@+id/app_version_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:paddingVertical="12dp"
+            android:text="App Version"
+            android:textColor="@color/almost_white"
+            android:textSize="16sp"
+            android:paddingHorizontal="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/clear_trip_history_tv" />
+
+        <TextView
+            android:id="@+id/privacy_policy_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:paddingVertical="12dp"
+            android:text="Privacy Policy"
+            android:textColor="@color/almost_white"
+            android:textSize="16sp"
+            android:paddingHorizontal="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/app_version_tv" />
+
+        <TextView
+            android:id="@+id/terms_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:paddingVertical="12dp"
+            android:text="Terms &amp; condition"
+            android:textColor="@color/almost_white"
+            android:textSize="16sp"
+            android:paddingHorizontal="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/privacy_policy_tv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

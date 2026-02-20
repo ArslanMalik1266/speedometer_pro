@@ -1,0 +1,32 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Unfilled / Remaining Track -->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <size android:height="6dp"/>
+            <solid android:color="@color/light_grey"/>  <!-- gray -->
+            <corners android:radius="50dp"/>
+        </shape>
+    </item>
+
+    <!-- Secondary progress (not used but needed to avoid bugs) -->
+    <item android:id="@android:id/secondaryProgress">
+        <shape android:shape="rectangle">
+            <size android:height="6dp"/>
+            <solid android:color="@color/light_grey"/> <!-- same as background -->
+            <corners android:radius="50dp"/>
+        </shape>
+    </item>
+
+    <!-- Filled progress -->
+    <item android:id="@android:id/progress">
+        <clip>   <!-- 👈 CRITICAL FIX -->
+            <shape android:shape="rectangle">
+                <size android:height="6dp"/>
+                <solid android:color="@color/orange"/> <!-- orange -->
+                <corners android:radius="50dp"/>
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>
