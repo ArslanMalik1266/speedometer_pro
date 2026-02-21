@@ -37,10 +37,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var customToolbar: View
 
-    override fun onResume() {
-        super.onResume()
-        enableFullscreen()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

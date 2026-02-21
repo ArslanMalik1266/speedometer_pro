@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/bottom_sheet"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_location_bottom_sheet"
+    >
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.08" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.92" />
+
+    <!-- Top 2% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <!-- Bottom 2% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <TextView
+        android:id="@+id/titlebottomsheet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/overusedgrotesk_semibold"
+        android:gravity="center"
+        android:text="Enable Location Services"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toTopOf="@id/guideTop" />
+
+    <TextView
+        android:id="@+id/descbottomsheet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/overused_grotesk_regular"
+        android:gravity="center"
+        android:text="Location permission is required for accurate speed readings."
+        android:textColor="@color/light_grey"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/titlebottomsheet"
+        app:layout_constraintStart_toStartOf="@id/titlebottomsheet"
+        app:layout_constraintTop_toBottomOf="@id/titlebottomsheet" />
+
+
+    <ImageView
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:src="@drawable/location_image"
+        app:layout_constraintBottom_toTopOf="@id/btn_enable"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/descbottomsheet" />
+
+    <TextView
+        android:id="@+id/btn_enable"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/enable_location_btn"
+        android:backgroundTint="@null"
+        android:elevation="0dp"
+        android:fontFamily="@font/overusedgrotesk_medium"
+        android:gravity="center"
+        android:text="Enable Location"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/guideBottom"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
