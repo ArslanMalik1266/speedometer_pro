@@ -66,19 +66,33 @@ class LocationBottomSheet : BottomSheetDialogFragment() {
         return dialog
     }
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_bottom_sheet_dialog, container, false)
+        val view =  inflater.inflate(R.layout.fragment_bottom_sheet_dialog, container, false)
+        ViewCompat.setOnApplyWindowInsetsListener(view.findViewById(R.id.bottom_sheet) ) { v, insets ->
+            val navigationBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+
+            v.setPadding(0, 0, 0, 0)
+
+            insets
+        }
+//        dialog?.window?.let { window ->
+//            WindowCompat.setDecorFitsSystemWindows(window, false)
+//
+//            val controller = WindowInsetsControllerCompat(window, window.decorView)
+//            controller.hide(
+//                WindowInsetsCompat.Type.systemBars()
+//            )
+//
+//            controller.systemBarsBehavior =
+//                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+//        }
+        return  view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ViewCompat.setOnApplyWindowInsetsListener(view.findViewById(R.id.bottom_sheet) ) { v, insets ->
-            val navigationBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
 
-            v.setPadding(0, 0, 0, navigationBars.bottom)
-
-            insets
-        }
         checkPermissionUseCase = CheckLocationPermissionUseCase(requireContext().applicationContext)
         val factory = LocationPermissionViewModelFactory(checkPermissionUseCase)
         viewModel = ViewModelProvider(this, factory).get(LocationPermissionViewModel::class.java)

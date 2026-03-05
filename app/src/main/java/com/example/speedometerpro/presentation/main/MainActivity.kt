@@ -67,22 +67,19 @@ class MainActivity : AppCompatActivity() {
     fun openRightDrawer(fragment: androidx.fragment.app.Fragment) {
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val drawer = findViewById<FrameLayout>(R.id.drawer)
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END)
+        drawerLayout.setDrawerLockMode( DrawerLayout.LOCK_MODE_UNLOCKED)
 
 
-        // Set drawer width to 80% of screen
         val displayMetrics = resources.displayMetrics
         val width = (displayMetrics.widthPixels * 0.9).toInt()
         drawer.layoutParams.width = width
         drawer.requestLayout()
 
-        // Replace content with the desired fragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.drawer, fragment)
             .addToBackStack(null)
             .commit()
 
-        // Open drawer
         drawerLayout.openDrawer(GravityCompat.END)
     }
 
@@ -151,7 +148,7 @@ class MainActivity : AppCompatActivity() {
                 systemBars.left,
                 systemBars.top,
                 systemBars.right,
-                0
+                systemBars.bottom
             )
 
             insets
