@@ -111,7 +111,7 @@
             android:id="@+id/speed_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/digital_seven"
+            android:fontFamily="@font/rajdhani_medium"
             android:text="0"
             android:textColor="@color/almost_white"
             android:textSize="96sp" />
