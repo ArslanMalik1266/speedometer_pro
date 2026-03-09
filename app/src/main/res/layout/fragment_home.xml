@@ -55,6 +55,7 @@
         android:text="00:00"
         android:textColor="@color/white"
         android:textSize="36sp"
+        android:drawableStart="@drawable/time_image"
         app:layout_constraintEnd_toEndOf="@id/guideEnd"
         app:layout_constraintStart_toStartOf="@id/guideStart"
         app:layout_constraintTop_toTopOf="@id/guideTop" />
@@ -64,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:src="@drawable/uhd_icon"
+        android:src="@drawable/hud_icon_on"
         app:layout_constraintEnd_toEndOf="@id/guideEnd"
         app:layout_constraintTop_toTopOf="@id/guideTop" />
 
