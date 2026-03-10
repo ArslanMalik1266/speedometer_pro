@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbarImage: ImageView
     private lateinit var historyIcon: ImageView
     private lateinit var settingsIcon: ImageView
+    private lateinit var backIcon: ImageView
 
     private lateinit var customToolbar: View
 
@@ -51,6 +52,13 @@ class MainActivity : AppCompatActivity() {
         historyIcon = findViewById(R.id.historyIcon)
         settingsIcon = findViewById(R.id.settingsIcon)
         customToolbar = findViewById(R.id.constraint_toolbar)
+        backIcon = findViewById(R.id.backIcon)
+
+        backIcon.setOnClickListener {
+            val homeFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? HomeFragment
+            homeFragment?.stopTrackingWithoutSaving()
+        }
+        observeViewModel()
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.nav_host_fragment, HomeFragment())
@@ -105,6 +113,24 @@ class MainActivity : AppCompatActivity() {
                 when (destination) {
                     DrawerDestination.History -> openRightDrawer(HistoryFragment())
                     DrawerDestination.Settings -> openRightDrawer(SettingsFragment())
+                }
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.toolbarState.collect { state ->
+                when (state) {
+                    ToolbarState.NORMAL -> {
+                        toolbarImage.visibility = View.VISIBLE
+                        historyIcon.visibility = View.VISIBLE
+                        settingsIcon.visibility = View.VISIBLE
+                        backIcon.visibility = View.GONE
+                    }
+                    ToolbarState.TRACKING -> {
+                        toolbarImage.visibility = View.GONE
+                        historyIcon.visibility = View.GONE
+                        settingsIcon.visibility = View.GONE
+                        backIcon.visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -166,6 +192,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    fun setHudMode(enabled: Boolean) {
+        val scale = if (enabled) -1f else 1f
+        toolbar.scaleX = scale
+    }
 
 
 

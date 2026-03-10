@@ -10,7 +10,7 @@
     <!-- Checked / Tracking -->
     <item android:state_selected="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/red"/>
+            <solid android:color="@color/grey"/>
             <corners android:radius="12dp"/>
         </shape>
     </item>

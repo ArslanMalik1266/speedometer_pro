@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +30,7 @@ import com.example.speedometerpro.presentation.customview.TrackingState
 import com.example.speedometerpro.presentation.history.SpeedHistoryViewModel
 import com.example.speedometerpro.presentation.history.SpeedHistoryViewModelFactory
 import com.example.speedometerpro.presentation.main.MainActivity
+import com.example.speedometerpro.presentation.main.MainViewModel
 import com.example.speedometerpro.presentation.settings.SettingsViewModel
 import com.example.speedometerpro.presentation.settings.SettingsViewModelFactory
 import kotlinx.coroutines.flow.combine
@@ -50,6 +52,9 @@ class HomeFragment : Fragment() {
     private lateinit var distanceKmPerHourTv: TextView
     private lateinit var loadingView: View
     private lateinit var mainContent: View
+    private lateinit var avgSpeedTv: TextView
+    private lateinit var maxSpeedTv: TextView
+    private lateinit var distanceTv: TextView
 
     private lateinit var viewModel: SpeedometerViewModel
     private lateinit var historyViewModel: SpeedHistoryViewModel
@@ -58,6 +63,11 @@ class HomeFragment : Fragment() {
     private var needleAnimator: android.animation.ValueAnimator? = null
     private var textAnimator: android.animation.ValueAnimator? = null
     private var lastReportedSpeed = 0f
+    private lateinit var hudIcon: ImageView
+    private var isHudMode = false
+    private lateinit var hudStopBtn: ImageView
+
+    private val mainViewModel: MainViewModel by activityViewModels()
 
 
 
@@ -112,6 +122,75 @@ class HomeFragment : Fragment() {
         setupObservers()
         setupClickListeners()
 
+        hudIcon.setOnClickListener {
+            val guideCentre = view.findViewById<androidx.constraintlayout.widget.Guideline>(R.id.guidecentre)
+            isHudMode = !isHudMode
+            if (isHudMode) {
+                avgSpeedTv.visibility = View.INVISIBLE
+                avgSpeedValueTv.visibility = View.INVISIBLE
+                avgKmPerHourTv.visibility = View.INVISIBLE
+                maxSpeedTv.visibility = View.INVISIBLE
+                maxSpeedValueTv.visibility = View.INVISIBLE
+                maxKmPerHourTv.visibility = View.INVISIBLE
+                distanceTv.visibility = View.INVISIBLE
+                distanceValueTv.visibility = View.INVISIBLE
+                distanceKmPerHourTv.visibility = View.INVISIBLE
+                val params = guideCentre.layoutParams as androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
+                params.guidePercent = 0.9f
+                guideCentre.layoutParams = params
+
+                mainContent.scaleX = -1f
+//                hudIcon.scaleX = -1f
+                hudIcon.setImageResource(R.drawable.hud_icon_on)
+
+                if (viewModel.trackingState.value != TrackingState.IDLE) {
+                    startStopBtn.visibility = View.GONE
+                    hudStopBtn.visibility = View.VISIBLE
+                    val paddingPy = (20 * resources.displayMetrics.density).toInt()
+                    hudStopBtn.setPadding(0, paddingPy, 0, paddingPy)
+                    continueBtn.setPadding(0, paddingPy, 0, paddingPy)
+                    val size = (60 * resources.displayMetrics.density).toInt()
+                    hudStopBtn.layoutParams.width = size
+                    hudStopBtn.layoutParams.height = size
+                    continueBtn.layoutParams.width = size
+                    continueBtn.layoutParams.height = size
+                    hudStopBtn.requestLayout()
+                    continueBtn.requestLayout()
+                }
+
+            } else {
+                avgSpeedTv.visibility = View.VISIBLE
+                avgSpeedValueTv.visibility = View.VISIBLE
+                avgKmPerHourTv.visibility = View.VISIBLE
+                maxSpeedTv.visibility = View.VISIBLE
+                maxSpeedValueTv.visibility = View.VISIBLE
+                maxKmPerHourTv.visibility = View.VISIBLE
+                distanceTv.visibility = View.VISIBLE
+                distanceValueTv.visibility = View.VISIBLE
+                distanceKmPerHourTv.visibility = View.VISIBLE
+                mainContent.scaleX = 1f
+                hudIcon.scaleX = 1f
+                hudIcon.setImageResource(R.drawable.hud_icon_off)
+                val params = guideCentre.layoutParams as androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
+                params.guidePercent = 0.7f
+                guideCentre.layoutParams = params
+
+                startStopBtn.visibility = View.VISIBLE
+                hudStopBtn.visibility = View.GONE
+                val paddingPy = (14 * resources.displayMetrics.density).toInt()
+                hudStopBtn.setPadding(0, paddingPy, 0, paddingPy)
+                continueBtn.setPadding(0, paddingPy, 0, paddingPy)
+                val size = (50 * resources.displayMetrics.density).toInt()
+                hudStopBtn.layoutParams.width = size
+                hudStopBtn.layoutParams.height = size
+                continueBtn.layoutParams.width = size
+                continueBtn.layoutParams.height = size
+                hudStopBtn.requestLayout()
+                continueBtn.requestLayout()
+            }
+            (requireActivity() as MainActivity).setHudMode(isHudMode)
+        }
+
 
     }
 
@@ -129,6 +208,11 @@ class HomeFragment : Fragment() {
         speedUnitTv = view.findViewById(R.id.speed_unit)
         distanceKmPerHourTv = view.findViewById(R.id.distance_km_per_hour_tv)
         mainContent = view.findViewById(R.id.fragment_home)
+        hudIcon = view.findViewById(R.id.hud_icon)
+        hudStopBtn = view.findViewById(R.id.hud_stop_btn)
+        avgSpeedTv = view.findViewById(R.id.avg_speed_tv)
+        maxSpeedTv = view.findViewById(R.id.max_speed_tv)
+        distanceTv = view.findViewById(R.id.distance_tv)
     }
 
     private fun setupObservers() {
@@ -221,6 +305,7 @@ class HomeFragment : Fragment() {
                 viewModel.trackingState.collect { state ->
                     when (state) {
                         TrackingState.TRACKING -> {
+                            continueBtn.visibility = View.VISIBLE
                             startStopBtn.text = "Stop"
                             startStopBtn.isSelected = true
                             startStopBtn.isActivated = false
@@ -228,26 +313,86 @@ class HomeFragment : Fragment() {
                             continueBtn.setPadding(0, paddingPy, 0, paddingPy)
                             continueBtn.setImageResource(R.drawable.continue_icon)
                             continueBtn.setBackgroundResource(R.drawable.circle_grey)
+
+
+                            if (isHudMode) {
+                                startStopBtn.visibility = View.GONE
+                                hudStopBtn.visibility = View.VISIBLE
+                                val paddingPy = (20 * resources.displayMetrics.density).toInt()
+                                hudStopBtn.setPadding(0, paddingPy, 0, paddingPy)
+                                continueBtn.setPadding(0, paddingPy, 0, paddingPy)
+
+                                val size = (60 * resources.displayMetrics.density).toInt()
+                                hudStopBtn.layoutParams.width = size
+                                hudStopBtn.layoutParams.height = size
+                                continueBtn.layoutParams.width = size
+                                continueBtn.layoutParams.height = size
+                                hudStopBtn.requestLayout()
+                                continueBtn.requestLayout()
+                            }
+
+                            avgSpeedValueTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
+                            maxSpeedValueTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
+                            distanceValueTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
                         }
                         TrackingState.PAUSED -> {
+                            continueBtn.visibility = View.VISIBLE
                             startStopBtn.text = "Save & Reset"
                             startStopBtn.isSelected = false
                             startStopBtn.isActivated = true
+
                             val paddingPx = (4 * resources.displayMetrics.density).toInt()
                             val paddingPy = (14 * resources.displayMetrics.density).toInt()
                             continueBtn.setPadding(paddingPx, paddingPy, 0, paddingPy)
                             continueBtn.setImageResource(R.drawable.pause_icon)
                             continueBtn.setBackgroundResource(R.drawable.circle_orange)
+
+                            if (isHudMode) {
+                                startStopBtn.visibility = View.GONE
+                                hudStopBtn.visibility = View.VISIBLE
+                                val paddingPy = (20 * resources.displayMetrics.density).toInt()
+                                hudStopBtn.setPadding(0, paddingPy, 0, paddingPy)
+                                continueBtn.setPadding(paddingPx, paddingPy, 0, paddingPy)
+                                val size = (60 * resources.displayMetrics.density).toInt()
+                                hudStopBtn.layoutParams.width = size
+                                hudStopBtn.layoutParams.height = size
+                                continueBtn.layoutParams.width = size
+                                continueBtn.layoutParams.height = size
+                                hudStopBtn.requestLayout()
+                                continueBtn.requestLayout()
+                            }
+
+                            avgSpeedValueTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
+                            maxSpeedValueTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
+                            distanceValueTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
                         }
                         TrackingState.IDLE -> {
+                            continueBtn.visibility = View.GONE
                             startStopBtn.text = "Start"
                             startStopBtn.isSelected = false
                             startStopBtn.isActivated = false
+
                             val paddingPx = (4 * resources.displayMetrics.density).toInt()
                             val paddingPy = (14 * resources.displayMetrics.density).toInt()
                             continueBtn.setPadding(paddingPx, paddingPy, 0, paddingPy)
                             continueBtn.setImageResource(R.drawable.pause_icon)
                             continueBtn.setBackgroundResource(R.drawable.circle_orange)
+
+                            if (isHudMode) {
+                                hudStopBtn.visibility = View.GONE
+                                startStopBtn.visibility = View.VISIBLE
+                                val size = (50 * resources.displayMetrics.density).toInt()
+                                hudStopBtn.layoutParams.width = size
+                                hudStopBtn.layoutParams.height = size
+                                continueBtn.layoutParams.width = size
+                                continueBtn.layoutParams.height = size
+                                hudStopBtn.requestLayout()
+                                continueBtn.requestLayout()
+                            }
+
+                            avgSpeedValueTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+                            maxSpeedValueTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+                            distanceValueTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
                         }
                     }
                 }
@@ -264,11 +409,13 @@ class HomeFragment : Fragment() {
                     viewModel.stopTracking()
                     saveToHistory(session)
                     resetSpeedometerUI()
+                    mainViewModel.onTrackingStopped()
                 }
                 TrackingState.IDLE -> {
                     viewModel.resetMetrics()
                     resetSpeedometerUI()
                     viewModel.startTracking()
+                    mainViewModel.onTrackingStarted()
                 }
             }
         }
@@ -277,8 +424,21 @@ class HomeFragment : Fragment() {
             when (viewModel.trackingState.value) {
                 TrackingState.TRACKING -> viewModel.pauseTracking()
                 TrackingState.PAUSED -> viewModel.resumeTracking()
-                else -> viewModel.startTracking()
+                else -> {
+                    viewModel.startTracking()
+                    mainViewModel.onTrackingStarted()
+                }
+
             }
+        }
+        hudStopBtn.setOnClickListener {
+            val session = viewModel.saveCurrentSession()
+            viewModel.stopTracking()
+            saveToHistory(session)
+            resetSpeedometerUI()
+            mainViewModel.onTrackingStopped()
+                hudStopBtn.visibility = View.GONE
+            startStopBtn.visibility = View.VISIBLE
         }
     }
 
@@ -318,5 +478,10 @@ class HomeFragment : Fragment() {
         distanceValueTv.text = "0"
         maxSpeedValueTv.text = "0.0"
         avgSpeedValueTv.text = "0.0"
+    }
+    fun stopTrackingWithoutSaving() {
+        viewModel.stopTracking()
+        resetSpeedometerUI()
+        mainViewModel.onTrackingStopped()
     }
 }

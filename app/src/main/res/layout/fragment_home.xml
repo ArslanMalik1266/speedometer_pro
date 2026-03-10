@@ -61,11 +61,11 @@
         app:layout_constraintTop_toTopOf="@id/guideTop" />
 
     <ImageView
-        android:id="@+id/uhd_icon"
+        android:id="@+id/hud_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:src="@drawable/hud_icon_on"
+        android:src="@drawable/hud_icon_off"
         app:layout_constraintEnd_toEndOf="@id/guideEnd"
         app:layout_constraintTop_toTopOf="@id/guideTop" />
 
@@ -151,12 +151,14 @@
         android:id="@+id/avg_speed_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:fontFamily="@font/overusedgrotesk_medium"
         android:text="Avg Speed"
         android:textColor="@color/almost_white"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/btn_home"
+        app:layout_constraintEnd_toStartOf="@+id/max_speed_tv"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidecentre" />
 
 
@@ -220,10 +222,11 @@
         android:text="Max Speed"
         android:textColor="@color/almost_white"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/avg_speed_tv"
-        app:layout_constraintEnd_toStartOf="@id/distance_tv"
         app:layout_constraintBottom_toBottomOf="@id/avg_speed_tv"
-        app:layout_constraintTop_toTopOf="@id/avg_speed_tv"/>
+        app:layout_constraintEnd_toStartOf="@+id/distance_tv"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/avg_speed_tv"
+        app:layout_constraintTop_toTopOf="@id/avg_speed_tv" />
 
     <TextView
         android:id="@+id/max_speed_value"
@@ -237,6 +240,7 @@
         app:layout_constraintStart_toStartOf="@id/max_speed_tv"
         app:layout_constraintEnd_toEndOf="@id/max_speed_tv"
         app:layout_constraintTop_toBottomOf="@id/max_speed_tv" />
+
     <TextView
         android:id="@+id/distance_tv"
         android:layout_width="wrap_content"
@@ -245,9 +249,10 @@
         android:text="Distance"
         android:textColor="@color/almost_white"
         android:textSize="12sp"
-        android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="@id/max_speed_tv"
-        app:layout_constraintEnd_toEndOf="@+id/continue_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/max_speed_tv"
         app:layout_constraintTop_toTopOf="@id/max_speed_tv" />
 
     <TextView
@@ -264,8 +269,18 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/guideBottom"
-        app:layout_constraintEnd_toStartOf="@id/continue_btn"
+        app:layout_constraintEnd_toStartOf="@id/hud_buttons_container"
         app:layout_constraintStart_toStartOf="@id/guideStart" />
+
+    <LinearLayout
+        android:id="@+id/hud_buttons_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/guideBottom"
+        app:layout_constraintStart_toEndOf="@id/btn_home"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd">
 
     <ImageView
         android:id="@+id/continue_btn"
@@ -273,10 +288,16 @@
         android:layout_height="50dp"
         android:background="@drawable/circle_orange"
         android:src="@drawable/pause_icon"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_home"
-        app:layout_constraintEnd_toEndOf="@id/guideEnd"
-        app:layout_constraintTop_toTopOf="@id/btn_home" />
+        android:layout_marginEnd="12dp" />
+
+    <ImageView
+        android:id="@+id/hud_stop_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/stop_icon"
+        android:background="@drawable/circle_grey"
+        android:visibility="gone"/>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

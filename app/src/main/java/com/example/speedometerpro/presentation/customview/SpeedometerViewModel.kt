@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 enum class TrackingState { IDLE, TRACKING, PAUSED }
 enum class LocationPermissionState { GRANTED, DENIED }
 
+
 class SpeedometerViewModel(
     private val calculateSessionUseCase: CalculateSessionUseCase,
     val speedUnitFlow: Flow<SpeedUnit>,
