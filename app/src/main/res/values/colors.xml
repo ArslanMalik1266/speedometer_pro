@@ -10,6 +10,7 @@
     <color name="red">#E41717</color>
     <color name="background_grey">#272727</color>
     <color name="backgroundLocation_grey">#0B0A0A</color>
+    <color name="splash_bg">#212121</color>
 
     <color name="orange">#FF8133</color>
 </resources>

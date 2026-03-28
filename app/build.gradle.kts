@@ -4,19 +4,20 @@ plugins {
 }
 
 android {
-    namespace = "com.example.speedometerpro"
+    namespace = "com.webscare.speedometer"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.speedometerpro"
+        applicationId = "com.webscare.speedometer"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        base.archivesName.set("Speedometer - V$versionCode($versionName)")
     }
 
     buildTypes {

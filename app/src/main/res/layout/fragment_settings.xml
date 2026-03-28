@@ -388,6 +388,32 @@
             app:layout_constraintStart_toStartOf="@id/guideStart"
             app:layout_constraintTop_toBottomOf="@id/privacy_policy_tv" />
 
+        <TextView
+            android:id="@+id/support_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:paddingVertical="12dp"
+            android:text="Support Request"
+            android:textColor="@color/almost_white"
+            android:textSize="16sp"
+            android:paddingHorizontal="4dp"
+            app:layout_constraintEnd_toStartOf="@id/support_arrow"
+            app:layout_constraintStart_toStartOf="@id/guideStart"
+            app:layout_constraintTop_toBottomOf="@id/terms_tv" />
+
+        <ImageView
+            android:id="@+id/support_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:rotation="-90"
+            android:src="@drawable/spinner_icon"
+            app:layout_constraintBottom_toBottomOf="@id/support_tv"
+            app:layout_constraintEnd_toEndOf="@id/guideEnd"
+            app:layout_constraintTop_toTopOf="@id/support_tv" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
 

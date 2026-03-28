@@ -1,4 +1,4 @@
-package com.example.speedometerpro
+package com.webscare.speedometer
 
 import org.junit.Test
 

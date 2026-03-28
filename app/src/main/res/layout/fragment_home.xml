@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/timer_value" />
 
 
-    <com.example.speedometerpro.presentation.customview.SpeedometerMeterView
+    <com.webscare.speedometer.presentation.customview.SpeedometerMeterView
         android:id="@+id/speedometerMeter"
         android:layout_width="0dp"
         android:layout_height="0dp"
