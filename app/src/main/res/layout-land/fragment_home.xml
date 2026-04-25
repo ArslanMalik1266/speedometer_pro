@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:id="@+id/fragment_home"
+    tools:context=".presentation.home.HomeFragment">
+
+    <!-- ═══════════════════════════════════
+         GUIDELINES
+         ═══════════════════════════════════ -->
+
+    <!-- Left margin 2% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <!-- Right margin 2% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.98" />
+
+    <!-- Top margin 3% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.00" />
+
+    <!-- Bottom margin 3% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.97" />
+
+    <!-- Left stats panel ends at 22% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLeftPanelEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <!-- Right buttons panel starts at 84% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideRightPanelStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.80" />
+
+    <!-- guidecentre kept for legacy reference -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidecentre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+
+
+    <TextView
+        android:id="@+id/timer_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/time_image"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/digital_seven"
+        android:text="00:00"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="@+id/glow"
+        app:layout_constraintStart_toStartOf="@+id/glow"
+        app:layout_constraintTop_toTopOf="@id/guideTop" />
+
+
+    <ImageView
+        android:id="@+id/hud_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:src="@drawable/hud_icon_off"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintTop_toTopOf="@id/guideTop" />
+    <LinearLayout
+        android:id="@+id/left_stats_panel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingStart="4dp"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintEnd_toStartOf="@id/speedometerMeter"
+        app:layout_constraintTop_toTopOf="@id/guideTop"
+        app:layout_constraintBottom_toTopOf="@id/guideBottom"
+        app:layout_constraintVertical_bias="0.5">
+
+        <!-- Avg Speed -->
+        <TextView
+            android:id="@+id/avg_speed_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:text="Avg Speed"
+            android:textColor="@color/almost_white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/avg_speed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/digital_seven"
+            android:text="0.0"
+            android:textColor="@color/orange"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/avg_km_per_hour_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:text="km/h"
+            android:textColor="@color/light_grey"
+            android:textSize="11sp" />
+
+        <!-- Max Speed -->
+        <TextView
+            android:id="@+id/max_speed_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:text="Max Speed"
+            android:textColor="@color/almost_white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/max_speed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/digital_seven"
+            android:text="0.0"
+            android:textColor="@color/orange"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/max_km_per_hour_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:text="km/h"
+            android:textColor="@color/light_grey"
+            android:textSize="11sp" />
+
+        <!-- Distance -->
+        <TextView
+            android:id="@+id/distance_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:text="Distance"
+            android:textColor="@color/almost_white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/distance_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/digital_seven"
+            android:text="0.0"
+            android:textColor="@color/orange"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/distance_km_per_hour_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:text="km"
+            android:textColor="@color/light_grey"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <!-- ═══════════════════════════════════
+         CENTRE — Glow + Speedometer gauge
+         ═══════════════════════════════════ -->
+
+    <ImageView
+        android:id="@+id/glow"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/glow"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        app:layout_constraintTop_toBottomOf="@id/timer_value"
+        app:layout_constraintBottom_toTopOf="@id/guideBottom"
+        app:layout_constraintStart_toStartOf="@id/speedometerMeter"
+        app:layout_constraintEnd_toEndOf="@id/speedometerMeter" />
+
+    <com.webscare.speedometer.presentation.customview.SpeedometerMeterView
+        android:id="@+id/speedometerMeter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintTop_toBottomOf="@id/timer_value"
+        app:layout_constraintBottom_toTopOf="@id/guideBottom"
+        android:scaleX="1.15"
+        android:scaleY="1.15"
+        app:layout_constraintStart_toEndOf="@id/guideLeftPanelEnd"
+        app:layout_constraintEnd_toStartOf="@id/guideRightPanelStart"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <!-- Speed number + unit — centred inside gauge -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/speedometerMeter"
+        app:layout_constraintEnd_toEndOf="@id/speedometerMeter"
+        app:layout_constraintStart_toStartOf="@id/speedometerMeter"
+        app:layout_constraintTop_toTopOf="@id/speedometerMeter">
+
+        <TextView
+            android:id="@+id/speed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rajdhani_medium"
+            android:text="0"
+            android:textColor="@color/almost_white"
+            android:textSize="80sp" />
+
+        <TextView
+            android:id="@+id/speed_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/overused_grotesk_regular"
+            android:text="km/h"
+            android:textColor="@color/almost_white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <!-- ═══════════════════════════════════
+         RIGHT PANEL — Stop + Pause buttons
+         ═══════════════════════════════════ -->
+
+    <LinearLayout
+        android:id="@+id/hud_buttons_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+       app:layout_constraintTop_toTopOf="@id/guideTop"
+       app:layout_constraintBottom_toBottomOf="@id/guideBottom"
+        app:layout_constraintStart_toEndOf="@id/speedometerMeter"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintVertical_bias="0.5">
+
+        <TextView
+            android:id="@+id/btn_home"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_start_stop_circle_selector"
+            android:backgroundTint="@null"
+            android:elevation="0dp"
+            android:fontFamily="@font/overusedgrotesk_medium"
+            android:gravity="center"
+            android:text="Start"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_marginBottom="10dp"/>
+        <ImageView
+            android:id="@+id/hud_stop_btn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="20dp"
+            android:src="@drawable/stop_icon"
+            android:background="@drawable/circle_grey"
+            android:visibility="gone"
+            android:layout_marginBottom="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/continue_btn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="20dp"
+            android:background="@drawable/circle_orange"
+            android:src="@drawable/pause_icon"
+         />
+
+
+
+    </LinearLayout>
+
+    <!-- ═══════════════════════════════════
+         BOTTOM — Start / Stop button
+         Sits under speedometer, same width
+         ═══════════════════════════════════ -->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

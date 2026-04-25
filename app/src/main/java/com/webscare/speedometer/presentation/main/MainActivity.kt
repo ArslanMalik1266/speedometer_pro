@@ -1,15 +1,12 @@
 package com.webscare.speedometer.presentation.main
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -18,14 +15,15 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import com.webscare.speedometer.R
-import com.webscare.speedometer.domain.usecase.CheckLocationPermissionUseCase
 import com.webscare.speedometer.presentation.history.HistoryFragment
 import com.webscare.speedometer.presentation.home.HomeFragment
-import com.webscare.speedometer.presentation.location.LocationBottomSheet
 import com.webscare.speedometer.presentation.settings.SettingsFragment
 import com.webscare.speedometer.util.DrawerDestination
 import com.google.android.material.appbar.MaterialToolbar
 import com.webscare.speedometer.Utils.addPressEffect
+import com.webscare.speedometer.domain.usecase.CheckLocationPermissionUseCase
+import com.webscare.speedometer.presentation.customview.TrackingState
+import com.webscare.speedometer.presentation.location.LocationBottomSheet
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,6 +41,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val drawerContainer = findViewById<FrameLayout>(R.id.drawer)
+        val displayMetrics = resources.displayMetrics
+        val isLandscape = resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+        val percentage = if (isLandscape) 0.50 else 0.85
+        val targetWidth = (displayMetrics.widthPixels * percentage).toInt()
+        val params = drawerContainer.layoutParams
+        params.width = targetWidth
+        drawerContainer.layoutParams = params
+
         enableFullscreen()
         applyEdgePadding()
 
@@ -56,8 +63,17 @@ class MainActivity : AppCompatActivity() {
         backIcon = findViewById(R.id.backIcon)
 
         backIcon.addPressEffect {
-            val homeFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? HomeFragment
-            homeFragment?.stopTrackingWithoutSaving()
+            val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? HomeFragment
+
+            fragment?.let { home ->
+                if (home.isHudMode) {
+                    home.disableHudMode()
+                    setHudMode(false) // Ye function icons wapis layega, lekin humein check karna hai...
+                } else {
+                    home.stopTrackingWithoutSaving()
+                    setHudMode(false)
+                }
+            }
         }
         observeViewModel()
 
@@ -75,36 +91,33 @@ class MainActivity : AppCompatActivity() {
 
     fun openRightDrawer(fragment: androidx.fragment.app.Fragment) {
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val drawer = findViewById<FrameLayout>(R.id.drawer)
-        drawerLayout.setDrawerLockMode( DrawerLayout.LOCK_MODE_UNLOCKED)
+        val drawerContainer = findViewById<FrameLayout>(R.id.drawer)
 
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
-        val displayMetrics = resources.displayMetrics
-        val width = (displayMetrics.widthPixels * 0.9).toInt()
-        drawer.layoutParams.width = width
-        drawer.requestLayout()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.drawer, fragment)
-            .addToBackStack(null)
-            .commit()
-
+        val existingFragment = supportFragmentManager.findFragmentById(R.id.drawer)
+        if (existingFragment != null) {
+            supportFragmentManager.beginTransaction()
+                .remove(existingFragment)
+                .commitNow()
+        }
         drawerLayout.openDrawer(GravityCompat.END)
+        drawerLayout.postDelayed({
+            if (!isFinishing && !supportFragmentManager.isStateSaved) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.drawer, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }, 280)
     }
-
     private fun setupUi() {
         historyIcon.addPressEffect {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-                viewModel.onHistoryClicked()
-            }
+            viewModel.onHistoryClicked()
         }
 
         settingsIcon.addPressEffect {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-                viewModel.onSettingsClicked()
-            }
+            viewModel.onSettingsClicked()
         }
     }
 
@@ -119,13 +132,20 @@ class MainActivity : AppCompatActivity() {
         }
         lifecycleScope.launchWhenStarted {
             viewModel.toolbarState.collect { state ->
+                val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? HomeFragment
+                val hudActive = fragment?.isHudMode ?: false
                 when (state) {
                     ToolbarState.NORMAL -> {
-                        toolbarImage.visibility = View.VISIBLE
-                        historyIcon.visibility = View.VISIBLE
-                        settingsIcon.visibility = View.VISIBLE
-                        backIcon.visibility = View.GONE
+                        if (hudActive) {
+                            setHudMode(true)
+                        } else {
+                            toolbarImage.visibility = View.VISIBLE
+                            historyIcon.visibility = View.VISIBLE
+                            settingsIcon.visibility = View.VISIBLE
+                            backIcon.visibility = View.GONE
+                        }
                     }
+
                     ToolbarState.TRACKING -> {
                         toolbarImage.visibility = View.GONE
                         historyIcon.visibility = View.GONE
@@ -162,43 +182,79 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyEdgePadding() {
+        val mainView = findViewById<View>(R.id.main)
+        val appBar =
+            findViewById<com.google.android.material.appbar.AppBarLayout>(R.id.appBarLayout)
 
-        ViewCompat.setOnApplyWindowInsetsListener(
-            findViewById(R.id.main)
-        ) { view, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(mainView) { view, insets ->
+            val systemBars =
+                insets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.systemBars())
 
-            val systemBars = insets.getInsetsIgnoringVisibility(
-                WindowInsetsCompat.Type.systemBars()
-            )
+            // Orientation check karein
+            val isLandscape =
+                resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
-            view.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,
-                systemBars.bottom
-            )
+            if (isLandscape) {
+                // 1. Landscape mein padding 0 kar dein
+                view.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+
+                // 2. AppBar ko 12dp margin top dein
+                val params = appBar.layoutParams as ViewGroup.MarginLayoutParams
+                params.topMargin = (12 * resources.displayMetrics.density).toInt()
+                appBar.layoutParams = params
+            } else {
+                view.setPadding(
+                    systemBars.left,
+                    systemBars.top,
+                    systemBars.right,
+                    systemBars.bottom
+                )
+
+                // Vertical mein agar margin nahi chahiye to zero kar dein
+                val params = appBar.layoutParams as ViewGroup.MarginLayoutParams
+                params.topMargin = 0
+                appBar.layoutParams = params
+            }
 
             insets
         }
     }
 
+    fun setHudMode(enabled: Boolean) {
+        toolbar.scaleX = 1f
+
+        if (enabled) {
+            toolbarImage.visibility = View.GONE
+            historyIcon.visibility = View.GONE
+            settingsIcon.visibility = View.GONE
+            backIcon.visibility = View.VISIBLE
+        } else {
+            // HUD OFF: Ab check karo tracking chal rahi hai ya nahi
+            val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? HomeFragment
+            val isTracking = fragment?.getTrackingState() != TrackingState.IDLE
+
+            if (isTracking) {
+                toolbarImage.visibility = View.GONE
+                historyIcon.visibility = View.GONE
+                settingsIcon.visibility = View.GONE
+                backIcon.visibility = View.VISIBLE
+            } else {
+                toolbarImage.visibility = View.VISIBLE
+                historyIcon.visibility = View.VISIBLE
+                settingsIcon.visibility = View.VISIBLE
+                backIcon.visibility = View.GONE
+            }
+        }
+
+
+    }
     private fun checkAndShowLocationSheet() {
         val checkPermission = CheckLocationPermissionUseCase(applicationContext)
 
         if (!checkPermission()) {
             val locationSheet = LocationBottomSheet()
-            locationSheet.isCancelable = false
+            locationSheet.isCancelable = true
             locationSheet.show(supportFragmentManager, "LocationBottomSheet")
         }
     }
-
-
-    fun setHudMode(enabled: Boolean) {
-        val scale = if (enabled) -1f else 1f
-        toolbar.scaleX = scale
-    }
-
-
-
-
 }

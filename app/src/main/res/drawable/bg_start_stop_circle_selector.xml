@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_activated="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/grey"/>
+
+        </shape>
+    </item>
+    <!-- Checked / Tracking -->
+    <item android:state_selected="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/grey"/>
+        </shape>
+    </item>
+
+    <!-- Default / Not Tracking -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/orange"/>
+        </shape>
+    </item>
+
+</selector>

@@ -45,6 +45,8 @@ class HistoryFragment : Fragment() {
     private val settingsViewModel: SettingsViewModel by lazy {
         val dao = AppDatabase.getInstance(requireContext()).speedHistoryDao()
         val repository = SpeedHistoryRepositoryImpl(dao)
+        val rootLayout = view?.findViewById<ViewGroup>(R.id.root_layout) // CoordinatorLayout ki ID dein
+        rootLayout?.scheduleLayoutAnimation()
 
         val settingsFactory = SettingsViewModelFactory(
             clearHistoryUseCase = DeleteSpeedHistoryUseCase(repository),

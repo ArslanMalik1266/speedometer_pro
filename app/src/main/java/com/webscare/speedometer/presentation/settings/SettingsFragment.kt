@@ -66,6 +66,8 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val root = view.findViewById<ViewGroup>(R.id.settings_root)
+        root.scheduleLayoutAnimation()
         applyEdgePadding(view)
         initViews(view)
         initViewModel()
@@ -294,4 +296,5 @@ class SettingsFragment : Fragment() {
             // no email app installed — silently ignore
         }
     }
+
 }

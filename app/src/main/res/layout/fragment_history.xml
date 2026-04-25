@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
+    android:id="@+id/root_layout"
+    android:layoutAnimation="@anim/layout_visibility_sequence"
     android:background="@color/background_grey"
     tools:context=".presentation.history.HistoryFragment">
 
@@ -72,7 +74,8 @@
             app:layout_constraintBottom_toBottomOf="@id/guideBottom"
             app:layout_constraintEnd_toEndOf="@id/guideEnd"
             app:layout_constraintStart_toStartOf="@id/guideStart"
-            app:layout_constraintTop_toTopOf="@id/guideTop" />
+            app:layout_constraintTop_toTopOf="@id/guideTop"
+/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

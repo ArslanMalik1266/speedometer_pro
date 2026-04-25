@@ -5,6 +5,8 @@
     <color name="almost_white">#DDDDDD</color>
     <color name="grey">#2F2F2F</color>
     <color name="light_grey">#808080</color>
+    <color name="description_grey">#A2A2A2</color>
+    <color name="btn_grey_text">#858585</color>
     <color name="dark_grey">#1A1A1A</color>
     <color name="medium_grey">#1C1C1C</color>
     <color name="red">#E41717</color>

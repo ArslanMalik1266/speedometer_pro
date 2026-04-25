@@ -1,3 +1,4 @@
 <resources>
     <dimen name="fab_margin">48dp</dimen>
+    <item name="drawer_width" format="fraction" type="dimen">85%</item>
 </resources>

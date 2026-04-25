@@ -8,6 +8,11 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="location_disclosure_body_1">Speedometer collects location data to measure your real-time speed, track trips, and provide speed alerts.</string>
+
+    <string name="location_disclosure_body_2">This app collects location data to enable continuous speed tracking and trip recording <b>even when the app is closed or not in use.</b></string>
+
+    <string name="location_disclosure_body_3">Your location and trip history are stored only on your device. They are never sent to our servers or shared with third parties.</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
